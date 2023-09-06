@@ -1,0 +1,42 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="my-3 border-bottom">
+        <div>
+            <h4>내 정보</h4>
+        </div>
+    </div>
+
+    <div>
+        <span>사용자ID : </span>
+        <span th:text="${siteUser.username}"></span>
+    </div>
+        <div>
+            <span>이름 : </span>
+            <span th:text="${siteUser.nickname}"></span>
+        </div>
+
+<div>
+    <span>닉네임 : </span>
+    <span th:text="${siteUser.name}"></span>
+</div>
+<div>
+    <span>생년월일 : </span>
+    <span th:text="${siteUser.birth}"></span>
+</div>
+<div>
+    <span>전화번호 : </span>
+    <span th:text="${siteUser.cellphoneNo}"></span>
+</div>
+<div>
+    <span>이메일 :</span>
+    <span th:text="${siteUser.email}"></span>
+</div>
+<!--    <div class="my-3">-->
+<!--        <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"-->
+<!--           sec:authorize="isAuthenticated()"-->
+<!--           th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"-->
+<!--           th:text="수정"></a>-->
+<!--    </div>-->
+</div>
+
+</html>
