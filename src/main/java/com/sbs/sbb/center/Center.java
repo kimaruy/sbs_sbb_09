@@ -1,4 +1,4 @@
-package com.sbs.sbb.question;
+package com.sbs.sbb.center;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Question {
+public class Center {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,7 +35,7 @@ public class Question {
 
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "center", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
 
     @ManyToOne

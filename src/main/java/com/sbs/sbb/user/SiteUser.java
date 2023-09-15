@@ -1,14 +1,8 @@
 package com.sbs.sbb.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.catalina.User;
 
 @Getter
 @Setter
@@ -24,6 +18,8 @@ public class SiteUser {
 
     private String password;
 
+    private String new_password;
+
     @Column(unique = true)
     private String email;
 
@@ -32,9 +28,9 @@ public class SiteUser {
 
     private String birth;
 
+    private String name;
+
     @Column(unique = true)
     private String nickname;
-
-    private String name;
 
 }

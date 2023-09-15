@@ -1,7 +1,6 @@
-package com.sbs.sbb.question;
+package com.sbs.sbb.center;
 
-import java.util.List;
-
+import com.sbs.sbb.center.Center;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,18 +8,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
-    Question findBySubject(String subject);
-    Question findBySubjectAndContent(String subject, String content);
-    List<Question> findBySubjectLike(String subject);
-    Page<Question> findAll(Pageable pageable);
-    Page<Question> findAll(Specification<Question> spec, Pageable pageable);
+import java.util.List;
+
+public interface CenterRepository extends JpaRepository<Center, Integer> {
+    Center findBySubject(String subject);
+    Center findBySubjectAndContent(String subject, String content);
+    List<Center> findBySubjectLike(String subject);
+    Page<Center> findAll(Pageable pageable);
+    Page<Center> findAll(Specification<Center> spec, Pageable pageable);
 
     @Query("select "
             + "distinct q "
-            + "from Question q "
+            + "from Center q "
             + "left outer join SiteUser u1 on q.author=u1 "
-            + "left outer join Answer a on a.question=q "
+            + "left outer join Answer a on a.center=q "
             + "left outer join SiteUser u2 on a.author=u2 "
             + "where "
             + "   q.subject like %:kw% "
@@ -28,5 +29,5 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
             + "   or u1.username like %:kw% "
             + "   or a.content like %:kw% "
             + "   or u2.username like %:kw% ")
-    Page<Question> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+    Page<Center> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
 }

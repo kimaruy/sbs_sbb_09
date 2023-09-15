@@ -1,0 +1,29 @@
+<html layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content" class="container my-3">
+    <div class="my-3 border-bottom">
+        <h4>회원 탈퇴</h4>
+        <form th:action="@{/user/mypage_withdrawal}" method="post">
+
+            <div>
+                <span>사용자ID : </span>
+                <span th:text="${siteUser.username}"></span>
+            </div>
+            <p>계정을 삭제 하기위해서는 본인 확인을 위해 비밀번호를 입력해주세요.</p>
+
+            <!-- 오류 메시지 표시 부분 -->
+            <div th:if="${error}">
+                <p class="text-danger" th:text="${error}"></p>
+            </div>
+
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" required>
+            <button class="btn btn-sm btn-outline-secondary" th:text="탈퇴"></button>
+        </form>
+
+    </div>
+</div>
+
+
+</body>
+</html>

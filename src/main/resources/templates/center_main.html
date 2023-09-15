@@ -8,45 +8,25 @@
     </div>
 
     <div>
-        <span>사용자ID : </span>
-        <span th:text="${siteUser.username}"></span>
-    </div>
-    <div>
-        <span>이름 : </span>
-        <span th:text="${siteUser.nickname}"></span>
+        <labal>"뭐"하지 또 "또"</labal>
+        <span>모든 사람들이 쉽고 빠르게 축제 정보를 찾고 더 효율적으로 즐길수있도록 "뭐"하지 또 "또"하지 뭐는 최선을 다하겠습니다</span>
     </div>
 
-    <div>
-        <span>닉네임 : </span>
-        <span th:text="${siteUser.name}"></span>
-    </div>
-    <div>
-        <span>생년월일 : </span>
-        <span th:text="${siteUser.birth}"></span>
-    </div>
-    <div>
-        <span>전화번호 : </span>
-        <span th:text="${siteUser.cellphoneNo}"></span>
-    </div>
-    <div>
-        <span>이메일 :</span>
-        <span th:text="${siteUser.email}"></span>
-    </div>
 
     <a th:href="@{|/user/mypage_modify|}" class="btn btn-sm btn-outline-secondary"
        sec:authorize="isAuthenticated()"
        th:if="${siteUser.username != null and #authentication.getPrincipal().getUsername() == siteUser.username}"
-       th:text="수정"></a>
+       th:text="1대1 문의"></a>
 
     <a th:href="@{|/user/password_modify|}" class="btn btn-sm btn-outline-secondary"
        sec:authorize="isAuthenticated()"
        th:if="${siteUser.username != null and #authentication.getPrincipal().getUsername() == siteUser.username}"
-       th:text="변경"></a>
+       th:text="신고 센터"></a>
 
     <a th:href="@{|/user/mypage_withdrawal|}" class="btn btn-sm btn-outline-secondary"
        sec:authorize="isAuthenticated()"
        th:if="${siteUser.username != null and #authentication.getPrincipal().getUsername() == siteUser.username}"
-       th:text="탈퇴"></a>
+       th:text="자주묻는 질문"></a>
 </div>
 
 </html>

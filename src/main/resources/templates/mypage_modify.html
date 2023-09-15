@@ -1,0 +1,25 @@
+<html layout:decorate="~{layout}">
+<body>
+
+<div layout:fragment="content" class="container my-3">
+    <div class="my-3 border-bottom">
+        <h1>회원정보 수정</h1>
+        <form th:action="@{/user/mypage_modify}" method="post">
+
+            <label for="name">닉네임:</label>
+            <input type="text" id="name" name="name" th:value="${siteUser.name}" required><br><br>
+
+            <label for="email">이메일:</label>
+            <input type="text" id="email" name="email" th:value="${siteUser.email}" required><br><br>
+
+            <label for="cellphoneNo">전화번호:</label>
+            <input type="text" id="cellphoneNo" name="cellphoneNo" th:value="${siteUser.cellphoneNo}" required><br><br>
+
+            <button class="btn btn-sm btn-outline-secondary"
+                    th:text="수정"></button>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

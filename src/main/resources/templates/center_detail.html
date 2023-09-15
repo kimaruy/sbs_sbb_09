@@ -1,44 +1,44 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
     <!-- 질문 -->
-    <h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
+    <h2 class="border-bottom py-2" th:text="${center.subject}"></h2>
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" th:utext="${@commonUtil.markdown(question.content)}"></div>
+            <div class="card-text" th:utext="${@commonUtil.markdown(center.content)}"></div>
             <div class="d-flex justify-content-end">
-                <div th:if="${question.modifyDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
+                <div th:if="${center.modifyDate != null}" class="badge bg-light text-dark p-2 text-start mx-3">
                     <div class="mb-2">modified at</div>
-                    <div th:text="${#temporals.format(question.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div th:text="${#temporals.format(center.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
                 <div class="badge bg-light text-dark p-2 text-start">
                     <div class="mb-2">
-                        <span th:if="${question.author != null}" th:text="${question.author.username}"></span>
+                        <span th:if="${center.author != null}" th:text="${center.author.username}"></span>
                     </div>
-                    <div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div th:text="${#temporals.format(center.createDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
             <div class="my-3">
                 <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
-                   th:data-uri="@{|/question/vote/${question.id}|}">
+                   th:data-uri="@{|/center/vote/${center.id}|}">
                     추천
-                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(center.voter)}"></span>
                 </a>
-                <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
+                <a th:href="@{|/center/modify/${center.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
-                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+                   th:if="${center.author != null and #authentication.getPrincipal().getUsername() == center.author.username}"
                    th:text="수정"></a>
-                <a href="javascript:void(0);" th:data-uri="@{|/question/delete/${question.id}|}"
+                <a href="javascript:void(0);" th:data-uri="@{|/center/delete/${center.id}|}"
                    class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
-                   th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
+                   th:if="${center.author != null and #authentication.getPrincipal().getUsername() == center.author.username}"
                    th:text="삭제"></a>
             </div>
         </div>
     </div>
     <!-- 답변의 갯수 표시 -->
     <h5 class="border-bottom my-3 py-2"
-        th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+        th:text="|${#lists.size(center.answerList)}개의 답변이 있습니다.|"></h5>
     <!-- 답변 반복 시작 -->
-    <div class="card my-3" th:each="answer : ${question.answerList}">
+    <div class="card my-3" th:each="answer : ${center.answerList}">
         <a th:id="|answer_${answer.id}|"></a>
         <div class="card-body">
             <div class="card-text" th:utext="${@commonUtil.markdown(answer.content)}"></div>
@@ -73,7 +73,7 @@
     </div>
     <!-- 답변 반복 끝  -->
     <!-- 답변 작성 -->
-    <form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
+    <form th:action="@{|/answer/create/${center.id}|}" th:object="${answerForm}" method="post" class="my-3">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
         <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>

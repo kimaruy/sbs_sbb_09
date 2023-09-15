@@ -5,6 +5,8 @@ import java.security.Principal;
 import com.sbs.sbb.answer.Answer;
 import com.sbs.sbb.answer.AnswerForm;
 import com.sbs.sbb.answer.AnswerService;
+import com.sbs.sbb.center.Center;
+import com.sbs.sbb.center.CenterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.sbs.sbb.question.Question;
-import com.sbs.sbb.question.QuestionService;
+import com.sbs.sbb.center.Center;
+import com.sbs.sbb.center.CenterService;
 import com.sbs.sbb.user.SiteUser;
 import com.sbs.sbb.user.UserService;
 
@@ -29,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class AnswerController {
 
-    private final QuestionService questionService;
+    private final CenterService centerService;
     private final AnswerService answerService;
     private final UserService userService;
 
@@ -37,16 +39,16 @@ public class AnswerController {
     @PostMapping("/create/{id}")
     public String createAnswer(Model model, @PathVariable("id") Integer id,
                                @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
-        Question question = this.questionService.getQuestion(id);
+        Center center = this.centerService.getCenter(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
         if (bindingResult.hasErrors()) {
-            model.addAttribute("question", question);
-            return "question_detail";
+            model.addAttribute("center", center);
+            return "center_detail";
         }
-        Answer answer = this.answerService.create(question,
+        Answer answer = this.answerService.create(center,
                 answerForm.getContent(), siteUser);
-        return String.format("redirect:/question/detail/%s#answer_%s",
-                answer.getQuestion().getId(), answer.getId());
+        return String.format("redirect:/center/detail/%s#answer_%s",
+                answer.getCenter().getId(), answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -72,8 +74,8 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         this.answerService.modify(answer, answerForm.getContent());
-        return String.format("redirect:/question/detail/%s#answer_%s",
-                answer.getQuestion().getId(), answer.getId());
+        return String.format("redirect:/center/detail/%s#answer_%s",
+                answer.getCenter().getId(), answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -84,7 +86,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.answerService.delete(answer);
-        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+        return String.format("redirect:/center/detail/%s", answer.getCenter().getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -93,7 +95,7 @@ public class AnswerController {
         Answer answer = this.answerService.getAnswer(id);
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.answerService.vote(answer, siteUser);
-        return String.format("redirect:/question/detail/%s#answer_%s",
-                answer.getQuestion().getId(), answer.getId());
+        return String.format("redirect:/center/detail/%s#answer_%s",
+                answer.getCenter().getId(), answer.getId());
     }
 }

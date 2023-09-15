@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import com.sbs.sbb.answer.Answer;
 import com.sbs.sbb.answer.AnswerRepository;
+import com.sbs.sbb.center.Center;
 import org.springframework.stereotype.Service;
 
 import com.sbs.sbb.DataNotFoundException;
-import com.sbs.sbb.question.Question;
+import com.sbs.sbb.center.Center;
 import com.sbs.sbb.user.SiteUser;
 
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,11 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
 
 
-    public Answer create(Question question, String content, SiteUser author) {
+    public Answer create(Center center, String content, SiteUser author) {
         Answer answer = new Answer();
         answer.setContent(content);
         answer.setCreateDate(LocalDateTime.now());
-        answer.setQuestion(question);
+        answer.setCenter(center);
         answer.setAuthor(author);
         this.answerRepository.save(answer);
         return answer;

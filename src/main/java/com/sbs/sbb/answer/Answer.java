@@ -3,7 +3,8 @@ package com.sbs.sbb.answer;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.sbs.sbb.question.Question;
+import com.sbs.sbb.center.Center;
+import com.sbs.sbb.center.Center;
 import com.sbs.sbb.user.SiteUser;
 
 import jakarta.persistence.Column;
@@ -30,7 +31,7 @@ public class Answer {
     private LocalDateTime createDate;
 
     @ManyToOne
-    private Question question;
+    private Center center;
 
     @ManyToOne
     private SiteUser author;
