@@ -170,6 +170,17 @@ public class UserController {
         return "redirect:/user/mypage"; // 비밀번호 변경 성공 시 마이페이지로 리다이렉트
     }
 
+    @GetMapping("/center_main")
+    public String center_main() {
+
+        return "center_main";
+    }
+
+    @GetMapping("/main")
+    public String main() {
+
+        return "main";
+    }
 }
 
 

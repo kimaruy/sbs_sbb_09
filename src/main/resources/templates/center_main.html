@@ -3,30 +3,22 @@
 
     <div class="my-3 border-bottom">
         <div>
-            <h4>내 정보</h4>
+            <h4>고객센터</h4>
         </div>
     </div>
 
     <div>
-        <labal>"뭐"하지 또 "또"</labal>
-        <span>모든 사람들이 쉽고 빠르게 축제 정보를 찾고 더 효율적으로 즐길수있도록 "뭐"하지 또 "또"하지 뭐는 최선을 다하겠습니다</span>
+        <label>"뭐"하지 또 "또"</label>
+        <span>모든 사람들이 쉽고 빠르게 축제 정보를 찾고 더 효율적으로 즐길 수 있도록 "뭐"하지 또 "또"하지 뭐는 최선을 다하겠습니다</span>
     </div>
 
+    <button class="btn btn-sm btn-outline-secondary">1대1문의</button>
 
-    <a th:href="@{|/user/mypage_modify|}" class="btn btn-sm btn-outline-secondary"
-       sec:authorize="isAuthenticated()"
-       th:if="${siteUser.username != null and #authentication.getPrincipal().getUsername() == siteUser.username}"
-       th:text="1대1 문의"></a>
+    <button class="btn btn-sm btn-outline-secondary">신고센터</button>
 
-    <a th:href="@{|/user/password_modify|}" class="btn btn-sm btn-outline-secondary"
-       sec:authorize="isAuthenticated()"
-       th:if="${siteUser.username != null and #authentication.getPrincipal().getUsername() == siteUser.username}"
-       th:text="신고 센터"></a>
+    <button class="btn btn-sm btn-outline-secondary">자주묻는 질문</button>
 
-    <a th:href="@{|/user/mypage_withdrawal|}" class="btn btn-sm btn-outline-secondary"
-       sec:authorize="isAuthenticated()"
-       th:if="${siteUser.username != null and #authentication.getPrincipal().getUsername() == siteUser.username}"
-       th:text="자주묻는 질문"></a>
+    <button class="btn btn-sm btn-outline-secondary">제휴문의</button>
 </div>
 
 </html>
