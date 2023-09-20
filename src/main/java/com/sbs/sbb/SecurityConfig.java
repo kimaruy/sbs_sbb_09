@@ -17,13 +17,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-
-
-        @Bean
+    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+                .authorizeRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/consulting/create").hasRole("ADMIN") // "ADMIN" 권한이 있는 사용자만 "/consulting/create" 경로에 접근 가능
+                                .requestMatchers("/**").permitAll()
+                ) // 다른 요청은 모든 사용자에게 허용
                 .formLogin()
                 .loginPage("/user/login")
                 .defaultSuccessUrl("/")
@@ -31,8 +32,7 @@ public class SecurityConfig {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                 .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
-        ;
+                .invalidateHttpSession(true);
         return http.build();
     }
 

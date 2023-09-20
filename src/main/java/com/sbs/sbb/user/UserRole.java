@@ -1,16 +1,16 @@
-package com.sbs.sbb.user;
+    package com.sbs.sbb.user;
 
-import lombok.Getter;
+    import lombok.Getter;
 
 
-@Getter
-public enum UserRole {
-    ADMIN("ROLE_ADMIN"),
-    USER("ROLE_USER");
+    @Getter
+    public enum UserRole {
+        ADMIN("ROLE_ADMIN"),
+        USER("ROLE_USER");
 
-    UserRole(String value) {
-        this.value = value;
+        UserRole(String value) {
+            this.value = value;
+        }
+
+        private String value;
     }
-
-    private String value;
-}

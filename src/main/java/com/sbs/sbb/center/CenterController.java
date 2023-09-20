@@ -1,29 +1,20 @@
 package com.sbs.sbb.center;
 
-import java.security.Principal;
-
-import com.sbs.sbb.center.Center;
-import com.sbs.sbb.center.CenterForm;
-import com.sbs.sbb.center.CenterService;
+import com.sbs.sbb.answer.AnswerForm;
+import com.sbs.sbb.user.SiteUser;
+import com.sbs.sbb.user.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.sbs.sbb.answer.AnswerForm;
-import com.sbs.sbb.user.SiteUser;
-import com.sbs.sbb.user.UserService;
-
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.security.Principal;
 
 @RequestMapping("/center")
 @RequiredArgsConstructor

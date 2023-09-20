@@ -1,24 +1,21 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
-
-    <div class="my-3 border-bottom">
-        <div>
-            <h4>고객센터</h4>
+        <div class="my-3 border-bottom">
+            <div>
+                <h4>고객 센터</h4>
+            </div>
         </div>
-    </div>
 
-    <div>
-        <label>"뭐"하지 또 "또"</label>
-        <span>모든 사람들이 쉽고 빠르게 축제 정보를 찾고 더 효율적으로 즐길 수 있도록 "뭐"하지 또 "또"하지 뭐는 최선을 다하겠습니다</span>
-    </div>
+        <div>
+            <label>"뭐"하지 또 "또"</label>
+            <span>모든 사람들이 쉽고 빠르게 축제 정보를 찾고 더 효율적으로 즐길 수 있도록 "뭐"하지 또 "또"하지 뭐는 최선을 다하겠습니다</span>
+        </div>
 
-    <button class="btn btn-sm btn-outline-secondary">1대1문의</button>
+    <a th:href="@{/consulting/list}" class="btn btn-sm btn-outline-secondary" th:text="질문"></a>
 
-    <button class="btn btn-sm btn-outline-secondary">신고센터</button>
+    <a th:href="@{/consulting/list}" class="btn btn-sm btn-outline-secondary" th:text="신고"></a>
 
-    <button class="btn btn-sm btn-outline-secondary">자주묻는 질문</button>
-
-    <button class="btn btn-sm btn-outline-secondary">제휴문의</button>
+    <a th:href="@{/consulting/list}" class="btn btn-sm btn-outline-secondary" th:text="제휴"></a>
 </div>
 
 </html>

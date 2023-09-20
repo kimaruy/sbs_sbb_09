@@ -117,7 +117,7 @@ public class UserController {
                              HttpServletResponse response, Principal principal, RedirectAttributes attributes) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
 
-        if (BCrypt.checkpw(password, siteUser.getPassword())) {
+        if (userService.isCorrectPassword(siteUser.getUsername(), password)) {
             this.userService.delete(siteUser);
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -130,13 +130,14 @@ public class UserController {
                 session.invalidate();
             }
 
-            return "redirect:/center/list";
+            return "redirect:/user/main";
         } else {
             // 비밀번호가 일치하지 않을 때 오류 메시지를 전달하고 회원 탈퇴 페이지로 리다이렉트합니다.
             attributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 다시 시도해주세요.");
             return "redirect:/user/mypage_withdrawal";
         }
     }
+
 
 
     @PreAuthorize("isAuthenticated()")
@@ -149,7 +150,7 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/password_modify")
-    public String changePassword(@RequestParam("Password") String Password,
+    public String showChangePasswordForm(@RequestParam("Password") String Password,
                                  @RequestParam("newPassword") String newPassword,
                                  @RequestParam("confirmPassword") String confirmPassword,
                                  Model model, Principal principal) {

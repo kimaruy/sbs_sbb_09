@@ -1,12 +1,11 @@
 package com.sbs.sbb.answer;
 
-import java.security.Principal;
-
-import com.sbs.sbb.answer.Answer;
-import com.sbs.sbb.answer.AnswerForm;
-import com.sbs.sbb.answer.AnswerService;
 import com.sbs.sbb.center.Center;
 import com.sbs.sbb.center.CenterService;
+import com.sbs.sbb.user.SiteUser;
+import com.sbs.sbb.user.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,13 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.sbs.sbb.center.Center;
-import com.sbs.sbb.center.CenterService;
-import com.sbs.sbb.user.SiteUser;
-import com.sbs.sbb.user.UserService;
-
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.security.Principal;
 
 @RequestMapping("/answer")
 @RequiredArgsConstructor

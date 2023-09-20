@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -33,4 +35,21 @@ public class SiteUser {
     @Column(unique = true)
     private String nickname;
 
+    @ManyToMany
+    Set<SiteUser> voter;
+
+    @ManyToOne
+    private SiteUser author;
+
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<UserRole> authorities;
+
+    public boolean hasRole(UserRole role) {
+        return authorities.contains(role);
+    }
+
+    public boolean isAdmin() {
+        return hasRole(UserRole.ADMIN);
+    }
 }
