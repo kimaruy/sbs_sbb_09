@@ -18,6 +18,11 @@
                 </div>
             </div>
             <div class="my-3">
+                <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+                   th:data-uri="@{|/consulting/vote/${consulting.id}|}">
+                    추천
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(consulting.voter)}"></span>
+                </a>
                 <a th:href="@{|/consulting/modify/${consulting.id}|}" class="btn btn-sm btn-outline-secondary"
                    sec:authorize="isAuthenticated()"
                    th:if="${consulting.author != null and #authentication.getPrincipal().getUsername() == consulting.author.username}"
@@ -34,7 +39,7 @@
         th:text="|${#lists.size(consulting.consulting_answerList)}개의 답변이 있습니다.|"></h5>
     <!-- 답변 반복 시작 -->
     <div class="card my-3" th:each="consulting_answer : ${consulting.consulting_answerList}">
-        <a th:id="|consulting_answer_${consulting_answer.id}|"></a>
+        <a th:id="|consulting_answer{consulting_answer.id}|"></a>
         <div class="card-body">
             <div class="card-text" th:utext="${@commonUtil.markdown(consulting_answer.content)}"></div>
             <div class="d-flex justify-content-end">
@@ -63,21 +68,22 @@
     </div>
     <!-- 답변 반복 끝  -->
     <!-- 답변 작성 -->
-    <form th:action="@{|/consulting_answer/create/${consulting.id}|}" th:object="${consulting_answerForm}" method="post" class="my-3">
-        <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
-        <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
-        <input type="submit" value="답변등록" class="btn btn-primary my-2">
-    </form>
-</div>
-<script layout:fragment="script" type='text/javascript'>
-    const delete_elements = document.getElementsByClassName("delete");
-    Array.from(delete_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if(confirm("정말로 삭제하시겠습니까?")) {
-                location.href = this.dataset.uri;
-            };
-        });
-    });
-</script>
-</html>
+    <!--  <form th:action="@{|/consulting_answer/create/${consulting.id}|}" th:object="${consulting_answerForm}" method="post" class="my-3">
+          <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+          <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control" rows="10"></textarea>
+          <textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
+          <input type="submit" value="답변등록" class="btn btn-primary my-2">
+      </form>-->
+  </div>
+  <script layout:fragment="script" type='text/javascript'>
+      const delete_elements = document.getElementsByClassName("delete");
+      Array.from(delete_elements).forEach(function(element) {
+          element.addEventListener('click', function() {
+              if(confirm("정말로 삭제하시겠습니까?")) {
+                  location.href = this.dataset.uri;
+              };
+          });
+      });
+
+  </script>
+  </html>

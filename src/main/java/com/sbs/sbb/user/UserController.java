@@ -1,6 +1,5 @@
 package com.sbs.sbb.user;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -10,16 +9,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -30,10 +25,7 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
-    private com.sbs.sbb.user.UserService UserService;
-    private PasswordEncoder passwordEncoder;
-    private String correctPassword = "기존비밀번호"; // 실제 기존 비밀번호
-
+    private final PasswordEncoder passwordEncoder;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/mypage")
@@ -44,19 +36,21 @@ public class UserController {
         return "mypage_form";
     }
 
-
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("mypage_modify")
+    @GetMapping("/mypage_modify")
     public String updateUserInfo(Principal principal, Model model) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
         model.addAttribute("siteUser", siteUser);
-        return "mypage_modify"; // 변경된 부분: 리다이렉트가 아니라 뷰 이름을 반환합니다.
+        return "mypage_modify";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("mypage_modify") // @PathVariable 추가
+    @PostMapping("/mypage_modify")
     public String updateUserInfo(@Valid UserProfile userProfile, BindingResult bindingResult,
                                  Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "mypage_modify";
+        }
 
         SiteUser siteUser = this.userService.getUser(principal.getName());
         this.userService.modify(siteUser, userProfile.getName(), userProfile.getCellphoneNo(),
@@ -104,11 +98,11 @@ public class UserController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("mypage_withdrawal")
+    @GetMapping("/mypage_withdrawal")
     public String userDelete(Principal principal, Model model) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
         model.addAttribute("siteUser", siteUser);
-        return "mypage_withdrawal"; // 변경된 부분: 리다이렉트가 아니라 뷰 이름을 반환합니다.
+        return "mypage_withdrawal";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -118,8 +112,10 @@ public class UserController {
         SiteUser siteUser = this.userService.getUser(principal.getName());
 
         if (userService.isCorrectPassword(siteUser.getUsername(), password)) {
-            this.userService.delete(siteUser);
+            // 사용자를 삭제
+            this.userService.deleteUserAndRelatedData(siteUser.getUsername());
 
+            // 사용자 삭제 후 로그아웃 처리
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null) {
                 new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -132,13 +128,11 @@ public class UserController {
 
             return "redirect:/user/main";
         } else {
-            // 비밀번호가 일치하지 않을 때 오류 메시지를 전달하고 회원 탈퇴 페이지로 리다이렉트합니다.
+            // 비밀번호가 일치하지 않을 때 오류 메시지를 전달하고 회원 탈퇴 페이지로 리다이렉트
             attributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다. 다시 시도해주세요.");
             return "redirect:/user/mypage_withdrawal";
         }
     }
-
-
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/password_modify")
@@ -150,10 +144,10 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/password_modify")
-    public String showChangePasswordForm(@RequestParam("Password") String Password,
-                                 @RequestParam("newPassword") String newPassword,
-                                 @RequestParam("confirmPassword") String confirmPassword,
-                                 Model model, Principal principal) {
+    public String showChangePasswordForm(@RequestParam("password") String password,
+                                         @RequestParam("newPassword") String newPassword,
+                                         @RequestParam("confirmPassword") String confirmPassword,
+                                         Model model, Principal principal) {
         String username = principal.getName();
 
         if (!newPassword.equals(confirmPassword)) {
@@ -161,28 +155,23 @@ public class UserController {
             return "password_modify";
         }
 
-        if (!userService.isCorrectPassword(username, Password)) {
+        if (!userService.isCorrectPassword(username, password)) {
             model.addAttribute("error", "기존 비밀번호가 올바르지 않습니다.");
             return "password_modify";
         }
 
         userService.updatePassword(username, newPassword);
 
-        return "redirect:/user/mypage"; // 비밀번호 변경 성공 시 마이페이지로 리다이렉트
+        return "redirect:/user/mypage";
     }
 
     @GetMapping("/center_main")
     public String center_main() {
-
         return "center_main";
     }
 
     @GetMapping("/main")
     public String main() {
-
         return "main";
     }
 }
-
-
-

@@ -30,4 +30,6 @@ public class Consulting_Answer {
 
     private LocalDateTime modifyDate;
 
+
+
 }

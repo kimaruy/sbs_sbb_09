@@ -26,7 +26,7 @@ public class Consulting {
 
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "consulting", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "consulting", cascade = CascadeType.ALL) // 또는 CascadeType.REMOVE로 설정
     private List<Consulting_Answer> consulting_answerList;
 
     @ManyToOne

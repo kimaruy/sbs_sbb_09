@@ -40,7 +40,7 @@ public class Consulting_AnswerController {
         }
         Consulting_Answer consulting_answer = this.consulting_answerService.create(consulting,
                 consulting_answerForm.getContent(), siteUser);
-        return String.format("redirect:/consulting/detail/%s#consulting_answer_%s",
+        return String.format("redirect:/consulting/detail/%s#answer_%s",
                 consulting_answer.getConsulting().getId(), consulting_answer.getId());
     }
 

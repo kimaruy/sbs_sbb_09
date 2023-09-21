@@ -6,6 +6,9 @@ import java.util.Optional;
 import com.sbs.sbb.answer.Answer;
 import com.sbs.sbb.answer.AnswerRepository;
 import com.sbs.sbb.center.Center;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbs.sbb.DataNotFoundException;
@@ -18,7 +21,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class AnswerService {
 
-    private final AnswerRepository answerRepository;
+    private final AnswerRepository answerRepository; // @Autowired 어노테이션을 사용하여 주입받음
+    private final EntityManager entityManager;
 
 
     public Answer create(Center center, String content, SiteUser author) {
@@ -54,4 +58,5 @@ public class AnswerService {
         answer.getVoter().add(siteUser);
         this.answerRepository.save(answer);
     }
+
 }

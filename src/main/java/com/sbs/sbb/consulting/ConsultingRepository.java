@@ -1,6 +1,8 @@
 package com.sbs.sbb.consulting;
 
 import com.sbs.sbb.consulting.Consulting;
+import com.sbs.sbb.user.SiteUser;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,4 +32,7 @@ public interface ConsultingRepository extends JpaRepository<Consulting, Integer>
             + "   or a.content like %:kw% "
             + "   or u2.username like %:kw% ")
     Page<Consulting> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+
+    @Transactional
+    void deleteByAuthor(SiteUser author);
 }

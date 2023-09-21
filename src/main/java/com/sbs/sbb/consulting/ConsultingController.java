@@ -1,5 +1,6 @@
 package com.sbs.sbb.consulting;
 
+import com.sbs.sbb.center.Center;
 import com.sbs.sbb.consulting_answer.Consulting_AnswerForm;
 import com.sbs.sbb.user.SiteUser;
 import com.sbs.sbb.user.UserService;
@@ -34,8 +35,13 @@ public class ConsultingController {
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, Consulting_AnswerForm consulting_answerForm) {
+    public String detail(Model model, @PathVariable("id") Integer id) {
         Consulting consulting = this.consultingService.getConsulting(id);
+
+        // Consulting_AnswerForm 폼 객체를 생성하고 모델에 추가
+        Consulting_AnswerForm consulting_answerForm = new Consulting_AnswerForm();
+        model.addAttribute("consulting_answerForm", consulting_answerForm);
+
         model.addAttribute("consulting", consulting);
         return "consulting_detail";
     }

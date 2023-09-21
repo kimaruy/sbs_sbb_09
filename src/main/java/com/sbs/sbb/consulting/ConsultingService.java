@@ -1,9 +1,11 @@
 package com.sbs.sbb.consulting;
 
 import com.sbs.sbb.DataNotFoundException;
+import com.sbs.sbb.center.Center;
 import com.sbs.sbb.consulting_answer.Consulting_Answer;
 import com.sbs.sbb.user.SiteUser;
 import jakarta.persistence.criteria.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -76,6 +78,11 @@ public class ConsultingService {
 
     public void delete(Consulting consulting) {
         this.consultingRepository.delete(consulting);
+    }
+
+    @Transactional
+    public void deleteConsultingByAuthor(SiteUser author) {
+        consultingRepository.deleteByAuthor(author);
     }
 
 }

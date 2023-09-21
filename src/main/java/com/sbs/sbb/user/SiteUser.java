@@ -1,9 +1,13 @@
 package com.sbs.sbb.user;
 
+import com.sbs.sbb.consulting.Consulting;
+import com.sbs.sbb.consulting_answer.Consulting_Answer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -52,4 +56,5 @@ public class SiteUser {
     public boolean isAdmin() {
         return hasRole(UserRole.ADMIN);
     }
+
 }

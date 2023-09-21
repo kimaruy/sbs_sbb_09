@@ -7,6 +7,7 @@ import com.sbs.sbb.answer.Answer;
 import com.sbs.sbb.answer.AnswerRepository;
 import com.sbs.sbb.center.Center;
 import com.sbs.sbb.consulting.Consulting;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.sbs.sbb.DataNotFoundException;
@@ -49,6 +50,10 @@ public class Consulting_AnswerService {
 
     public void delete(Consulting_Answer consulting_answer) {
         this.consulting_answerRepository.delete(consulting_answer);
+    }
+    @Transactional
+    public void deleteConsultingAnswersByAuthor(SiteUser author) {
+        consulting_answerRepository.deleteByAuthor(author);
     }
 
 }

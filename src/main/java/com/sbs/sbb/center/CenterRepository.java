@@ -1,5 +1,6 @@
 package com.sbs.sbb.center;
 
+import com.sbs.sbb.user.SiteUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,4 +30,6 @@ public interface CenterRepository extends JpaRepository<Center, Integer> {
             + "   or a.content like %:kw% "
             + "   or u2.username like %:kw% ")
     Page<Center> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
+
+    List<Center> findByAuthor(SiteUser siteUser);
 }
