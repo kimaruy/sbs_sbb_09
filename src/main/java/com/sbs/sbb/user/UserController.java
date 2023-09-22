@@ -136,19 +136,24 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/password_modify")
-    public String showChangePasswordForm(Principal principal, Model model) {
+    public String ChangePassword(Principal principal, Model model) {
         SiteUser siteUser = this.userService.getUser(principal.getName());
         model.addAttribute("siteUser", siteUser);
         return "password_modify";
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/password_modify")
-    public String showChangePasswordForm(@RequestParam("password") String password,
-                                         @RequestParam("newPassword") String newPassword,
-                                         @RequestParam("confirmPassword") String confirmPassword,
-                                         Model model, Principal principal) {
+    @PostMapping("/password_modify") // POST 요청을 처리하는 메서드로 변경
+    public String ChangePassword(@RequestParam("Password") String password,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Model model, Principal principal) {
         String username = principal.getName();
+
+        if (newPassword.equals(password)) {
+            model.addAttribute("error", "새로운 비밀번호는 기존 비밀번호와 다르게 설정해야 합니다.");
+            return "password_modify";
+        }
 
         if (!newPassword.equals(confirmPassword)) {
             model.addAttribute("error", "새로운 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
